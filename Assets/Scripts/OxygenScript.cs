@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OxygenScript : MonoBehaviour
 {
@@ -9,6 +8,8 @@ public class OxygenScript : MonoBehaviour
     public bool isDead = false;
     public bool consumeOxygen = true;
     public float displayOxygen = 100f;
+
+    public Text oxygenText;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,7 @@ public class OxygenScript : MonoBehaviour
             Debug.Log(displayOxygen);
         }
 
+        oxygenText.text = "Oxygen: " + displayOxygen +"%";
 
     }
 }
