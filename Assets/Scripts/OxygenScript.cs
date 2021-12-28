@@ -5,9 +5,12 @@ public class OxygenScript : MonoBehaviour
 {
     public float maxOxygen = 100f;
     public float currOxygen = 100f;
+    public float displayOxygen = 100f;
+    public float oxygenConsumption = 4f;
+    public float oxygenRegeneration = 5f;
+
     public bool isDead = false;
     public bool consumeOxygen = true;
-    public float displayOxygen = 100f;
 
     public Text oxygenText;
     // Start is called before the first frame update
@@ -19,19 +22,42 @@ public class OxygenScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(displayOxygen <= 0)
+        currOxygen = Mathf.Clamp(currOxygen, 0, maxOxygen);
+        displayOxygen = Mathf.RoundToInt(currOxygen);
+
+        if (displayOxygen <= 0)
         {
             isDead = true;
         }
 
+
+
         if (consumeOxygen && !isDead)
         {
-            currOxygen -= 2 * Time.deltaTime;
-            displayOxygen = Mathf.RoundToInt(currOxygen);
-            Debug.Log(displayOxygen);
+            currOxygen -= oxygenConsumption * Time.deltaTime;
+
+        }else if(!consumeOxygen && !isDead)
+        {
+            currOxygen += oxygenRegeneration * Time.deltaTime;
         }
 
         oxygenText.text = "Oxygen: " + displayOxygen +"%";
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "OxyField")
+        {
+            consumeOxygen = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "OxyField")
+        {
+            consumeOxygen = true;
+        }
     }
 }
