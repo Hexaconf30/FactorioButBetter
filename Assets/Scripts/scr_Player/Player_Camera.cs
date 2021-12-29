@@ -2,24 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseLook : MonoBehaviour
+public class Player_Camera : MonoBehaviour
 {
-    private float xRotation = 0f;
+    [Header("Assignables")]
+    [SerializeField] private float sensitivity = 200f;
+    [SerializeField] private Transform playerObject;
 
-    public float sensitivity = 200f;
+    //private variables
+    private float xRotation;
 
-    public Transform playerObject;
-
-
-
-    void Start()
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-
-
-    void Update()
+    private void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;

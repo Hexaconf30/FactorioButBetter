@@ -6,6 +6,9 @@ TagManager:
   tags:
   - OxyField
   - Interactable
+  - Ore
+  - Plant
+  - SoftRock
   layers:
   - Default
   - TransparentFX

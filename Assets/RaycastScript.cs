@@ -4,32 +4,34 @@ using UnityEngine;
 
 public class RaycastScript : MonoBehaviour
 {
+    [Header("Assignables")]
+    [Range(3f, 50f)]
+    [SerializeField] private float mineRange = 20f;
 
-    public Transform Cam;
-    public float range = 20f;
-    private float mining;
-
-    void Start()
+    private void Update()
     {
-        
-    }
-
-    void Update()
-    {
-        mining = Input.GetAxis("Fire1");
-
-        if(mining >= 0)
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            shootRay();
+            Mine();
         }
     }
 
-    private void shootRay()
+    private void Mine()
     {
-        RaycastHit hit;
-        if(Physics.Raycast(Cam.position, Cam.forward, out hit, range))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, mineRange))
         {
-            Debug.Log(hit.transform.name);
+            if (hit.transform.CompareTag("Ore"))
+            {
+                Debug.Log("Currently mining ore " + hit.transform.name + ".");
+            }
+            else if (hit.transform.CompareTag("Plant"))
+            {
+                Debug.Log("Currently mining plant " + hit.transform.name + ".");
+            }
+            else if (hit.transform.CompareTag("SoftRock"))
+            {
+                Debug.Log("Currently mining soft rock " + hit.transform.name + ".");
+            }
         }
     }
 }
